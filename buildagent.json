@@ -34,23 +34,9 @@
             "type": "string",
             "defaultValue": "Standard_D4s_v3",
             "allowedValues": [
-                "Standard_D2_v3",
-                "Standard_D4_v3",
-                "Standard_D8_v3",
-                "Standard_D4_v4",
-                "Standard_D8_v4",
-                "Standard_D16_v4",
-                "Standard_D32_v4",
-                "Standard_D4_v5",
-                "Standard_D8_v5",
-                "Standard_D16_v5",
-                "Standard_D32_v5",
-                "Standard_D16s_v5",
-                "Standard_D32s_v5",
-                "Standard_D4a_v5",
-                "Standard_D8a_v5",
-                "Standard_D16a_v5",
-                "Standard_D32a_v5"
+                "Standard_D4s_v3",
+                "Standard B4ms"
+
             ],
             "metadata": {
                 "Description": "Select the VM size of the deployment"
