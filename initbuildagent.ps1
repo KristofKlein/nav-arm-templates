@@ -12,6 +12,8 @@ param
     [string] $token,
     [Parameter(Mandatory=$true)]
     [string] $pool,
+    [Parameter(Mandatory=$false)]
+    [string] $labels,
     [Parameter(Mandatory=$true)]
     [string] $agentUrl,
     [Parameter(Mandatory=$false)]
@@ -86,6 +88,7 @@ Set-Content -Path $setupAgentsScript -Value @"
 `$agentName = '$agentName'
 `$agentUrl = '$agentUrl'
 `$pool = '$pool'
+`$labels = '$labels'
 `$count = $count
 `$vmName = '$vmName'
 `$templateLink = '$templateLink'

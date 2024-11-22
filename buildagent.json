@@ -34,80 +34,23 @@
             "type": "string",
             "defaultValue": "Standard_D4s_v3",
             "allowedValues": [
-                "Standard_D2_v2",
-                "Standard_D3_v2",
-                "Standard_D4_v2",
-                "Standard_D5_v2",
                 "Standard_D2_v3",
                 "Standard_D4_v3",
                 "Standard_D8_v3",
-                "Standard_D16_v3",
-                "Standard_D32_v3",
-                "Standard_D48_v3",
-                "Standard_D64_v3",
-                "Standard_D2s_v3",
-                "Standard_D4s_v3",
-                "Standard_D8s_v3",
-                "Standard_D16s_v3",
-                "Standard_D32s_v3",
-                "Standard_D48s_v3",
-                "Standard_D64s_v3",
-                "Standard_D2_v4",
                 "Standard_D4_v4",
                 "Standard_D8_v4",
                 "Standard_D16_v4",
                 "Standard_D32_v4",
-                "Standard_D48_v4",
-                "Standard_D64_v4",
-                "Standard_D2s_v4",
-                "Standard_D4s_v4",
-                "Standard_D8s_v4",
-                "Standard_D16s_v4",
-                "Standard_D32s_v4",
-                "Standard_D48s_v4",
-                "Standard_D64s_v4",
-                "Standard_D2a_v4",
-                "Standard_D4a_v4",
-                "Standard_D8a_v4",
-                "Standard_D16a_v4",
-                "Standard_D32a_v4",
-                "Standard_D48a_v4",
-                "Standard_D64a_v4",
-                "Standard_D2as_v4",
-                "Standard_D4as_v4",
-                "Standard_D8as_v4",
-                "Standard_D16as_v4",
-                "Standard_D32as_v4",
-                "Standard_D48as_v4",
-                "Standard_D64as_v4",
-                "Standard_D2_v5",
                 "Standard_D4_v5",
                 "Standard_D8_v5",
                 "Standard_D16_v5",
                 "Standard_D32_v5",
-                "Standard_D48_v5",
-                "Standard_D64_v5",
-                "Standard_D2s_v5",
-                "Standard_D4s_v5",
-                "Standard_D8s_v5",
                 "Standard_D16s_v5",
                 "Standard_D32s_v5",
-                "Standard_D48s_v5",
-                "Standard_D64s_v5",
-                "Standard_D2a_v5",
                 "Standard_D4a_v5",
                 "Standard_D8a_v5",
                 "Standard_D16a_v5",
-                "Standard_D32a_v5",
-                "Standard_D48a_v5",
-                "Standard_D64a_v5",
-                "Standard_D2as_v5",
-                "Standard_D4as_v5",
-                "Standard_D8as_v5",
-                "Standard_D16as_v5",
-                "Standard_D32as_v5",
-                "Standard_D48as_v5",
-                "Standard_D64as_v5"
+                "Standard_D32a_v5"
             ],
             "metadata": {
                 "Description": "Select the VM size of the deployment"
@@ -126,7 +69,7 @@
         },
         "osDiskSize": {
             "type": "int",
-            "defaultValue": 128,
+            "defaultValue": 265,
             "metadata": {
                 "Description": "Select the size of the OS Disk"
             }
@@ -171,7 +114,15 @@
             "defaultValue": "default",
             "minLength": 1,
             "metadata": {
-                "Description": "Specify additional labels for GitHub runners or specify the pool in which your agent should live for Azure DevOps"
+                "Description": "Specify Runner Group for GitHub runners or specify the pool in which your agent should live for Azure DevOps"
+            }
+        },
+        "AgentLabels": {
+            "type": "string",
+            "defaultValue": "default",
+            "minLength": 1,
+            "metadata": {
+                "Description": "Specify additional labels for GitHub runners"
             }
         },
         "AgentUrl": {
@@ -458,7 +409,7 @@
                     "fileUris": [
                         "[uri(deployment().properties.templateLink.uri, 'initbuildagent.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initbuildagent.ps1',' -TemplateLink \"',deployment().properties.templateLink.uri,'\" -VMAdminUsername \"',variables('vmAdminUsername'),'\" -AdminPassword \"',replace(variables('adminPassword'),'\"','\\\"'),'\" -Organization \"',parameters('organization'),'\" -token \"',parameters('token'),'\" -Count ',parameters('count'),' -agentUrl \"',parameters('agentUrl'),'\" -installHyperV \"',parameters('installHyperV'),'\" -runInsideDocker \"',parameters('runInsideDocker'),'\" -FinalSetupScriptUrl \"',parameters('FinalSetupScriptUrl'),'\" -Pool \"',parameters('labelsorpool'),'\" -vmName \"',variables('vmName'),'\"')]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initbuildagent.ps1',' -TemplateLink \"',deployment().properties.templateLink.uri,'\" -VMAdminUsername \"',variables('vmAdminUsername'),'\" -AdminPassword \"',replace(variables('adminPassword'),'\"','\\\"'),'\" -Organization \"',parameters('organization'),'\" -token \"',parameters('token'),'\" -Count ',parameters('count'),' -agentUrl \"',parameters('agentUrl'),'\" -installHyperV \"',parameters('installHyperV'),'\" -runInsideDocker \"',parameters('runInsideDocker'),'\" -FinalSetupScriptUrl \"',parameters('FinalSetupScriptUrl'),'\" -Pool \"',parameters('labelsorpool'),'\" -Labels \"',parameters('AgentLabels),'\" -vmName \"',variables('vmName'),'\"')]"
                 },
                 "protectedSettings": {}
             }

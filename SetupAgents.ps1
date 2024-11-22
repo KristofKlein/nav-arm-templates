@@ -58,7 +58,7 @@ if ($runInsideDocker -eq "Yes") {
         $allVolumes = (docker volume ls --format "{ '{{.Name}}': '{{.Mountpoint}}' }").Replace('\','\\').Replace("'",'"') | ConvertFrom-Json | ConvertTo-HashTable
         @{ "useVolumes" = $true; "ContainerHelperFolder" = "c:\bcch"; "defaultNewContainerParameters" = @{ "isolation" = "process" } } | ConvertTo-Json -Depth 99 | Set-Content (Join-Path $allVolumes.hosthelperfolder "BcContainerHelper.config.json") -Encoding UTF8
         
-        docker run -d --name $agentContainerName -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v C:\d\volumes:C:\d\volumes --mount source=$bcartifactsCacheVolumeName,target=c:\bcartifacts.cache --mount source=$bcContainerHelperVolumeName,target=C:\BCCH --mount source=$AgentWorkVolumeName,target=C:\Sources --restart unless-stopped --env AGENTURL=$agentUrl --env ORGANIZATIOn=$organization --env AGENTNAME=$agentName --env POOL=$pool --env TOKEN=$token $imageName
+        docker run -d --name $agentContainerName -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v C:\d\volumes:C:\d\volumes --mount source=$bcartifactsCacheVolumeName,target=c:\bcartifacts.cache --mount source=$bcContainerHelperVolumeName,target=C:\BCCH --mount source=$AgentWorkVolumeName,target=C:\Sources --restart unless-stopped --env AGENTURL=$agentUrl --env ORGANIZATIOn=$organization --env AGENTNAME=$agentName --env POOL=$pool --env TOKEN=$token --env RUNNER_GROUP=$pool $imageName
     }
 }
 else {
@@ -74,7 +74,7 @@ else {
         [System.IO.Compression.ZipFile]::ExtractToDirectory($agentFullname, $agentFolder)
     
         if ($agentUrl -like 'https://github.com/actions/runner/releases/download/*') {
-            .\config.cmd --unattended --url "$organization" --token "$token" --name $agentName --labels "$pool" --runAsService --windowslogonaccount "NT AUTHORITY\SYSTEM"
+            .\config.cmd --unattended --url "$organization" --token "$token" --name $agentName --runnergroup "$pool" --labels "$labels" --runAsService --windowslogonaccount "NT AUTHORITY\SYSTEM"
         }
         else {
             .\config.cmd --unattended --url "$organization" --auth PAT --token "$token" --pool "$pool" --agent $agentName --runAsService --windowslogonaccount "NT AUTHORITY\SYSTEM"
